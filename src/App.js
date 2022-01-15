@@ -4,8 +4,6 @@ import WrappedMap from './components/gMap/Map';
 
 import config from './components/gMap/config';
 import useFetch from './hooks/useFetch';
-// import Header from './components/Header/Header';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 function App() {
   
@@ -15,9 +13,7 @@ function App() {
   
   return (
     <div className="App">
-      {/* <MuiThemeProvider>
-        <Header title={'Vehicle Tracking Google Map Simmulator - React'}/>
-        </MuiThemeProvider> */}
+      
       { paths && stops ?
         <WrappedMap
             paths={paths}

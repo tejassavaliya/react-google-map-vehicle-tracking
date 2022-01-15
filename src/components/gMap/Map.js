@@ -6,6 +6,8 @@ import {
   Marker,
   Polyline
 } from 'react-google-maps';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
 
 const Map = ({paths, stops})=> {
     // console.log({paths, stops})
@@ -169,51 +171,53 @@ const Map = ({paths, stops})=> {
     }
     
     return(
-        <GoogleMap
-            defaultZoom={17}
-            defaultCenter={{ lat: centerPathLat, lng: centerpathLng }}
-        >
-            <button onClick={startSimulation}>Start Simulation</button>
-            <button onClick={stopSimulation}>Stop Simulation</button>
-            
-            
-            <Polyline
-                path={paths}
-                options={{
-                strokeColor: "#0088FF",
-                strokeWeight: 6,
-                strokeOpacity: 0.6,
-                defaultVisible: true,
-                }}
-            />
+        
+        <Card variant="outlined">
+          <div>
+            <Button variant="contained" onClick={startSimulation}>Start Simulation</Button>
+            <GoogleMap
+                defaultZoom={17}
+                defaultCenter={{ lat: centerPathLat, lng: centerpathLng }}
+            >
+              <Polyline
+                  path={paths}
+                  options={{
+                  strokeColor: "#0088FF",
+                  strokeWeight: 6,
+                  strokeOpacity: 0.6,
+                  defaultVisible: true,
+                  }}
+              />
 
-            {stops.data.map((stop, index) => (
+              {stops.data.map((stop, index) => (
 
-                <Marker
-                    key={index}
-                    position={{
-                        lat: stop.lat,
-                        lng: stop.lng
-                    }}
-                    title={stop.id}
-                    label={`${index + 1}`}
-                />
-            ))}
+                  <Marker
+                      key={index}
+                      position={{
+                          lat: stop.lat,
+                          lng: stop.lng
+                      }}
+                      title={stop.id}
+                      label={`${index + 1}`}
+                  />
+              ))}
 
-            {progress && (
-                <>
-                <Polyline
-                    path={progress}
-                    options={{ strokeColor: "orange" }}
-                />
+              {progress && (
+                  <>
+                  <Polyline
+                      path={progress}
+                      options={{ strokeColor: "orange" }}
+                  />
 
-                <Marker
-                    icon={icon1}
-                    position={progress[progress.length - 1]}
-                />
-                </>
-            )}
-      </GoogleMap>
+                  <Marker
+                      icon={icon1}
+                      position={progress[progress.length - 1]}
+                  />
+                  </>
+              )}
+          </GoogleMap>
+        </div>
+      </Card>  
     )
 };
 
