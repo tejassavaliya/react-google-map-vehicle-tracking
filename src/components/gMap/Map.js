@@ -8,27 +8,26 @@ import {
 } from 'react-google-maps';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
+import '../../App.css';
 
 const Map = ({paths, stops})=> {
-    // console.log({paths, stops})
+    
    
     const [progress, setProgress] = useState(null);
-
     const velocity = 27; // 100km per hour
     let initialDate;
     let interval = null;
     const icon1 = {
-        url: 
-          "https://images.vexels.com/media/users/3/154573/isolated/preview/bd08e000a449288c914d851cb9dae110-hatchback-car-top-view-silhouette-by-vexels.png",
-        scaledSize: new window.google.maps.Size(30, 30),
-        anchor: new window.google.maps.Point(15, 15),
+        url: "https://images.vexels.com/media/users/3/154573/isolated/preview/bd08e000a449288c914d851cb9dae110-hatchback-car-top-view-silhouette-by-vexels.png",
+        scaledSize: new window.google.maps.Size(40, 40),
+        anchor: new window.google.maps.Point(20, 20),
         scale: 0.7,
       };
     
     const center = parseInt(paths.length / 2 );
-    const centerPathLat = paths[center + 5].lat;
+    const centerPathLat = paths[center].lat;
     const centerpathLng = paths[center + 5].lng;
-
+    
     useEffect(() => {
         calculatePath();
 
@@ -36,13 +35,14 @@ const Map = ({paths, stops})=> {
             console.log("CLEAR........");
             interval && window.clearInterval(interval);
         }
-    }, [paths])
+    }, [paths]);
+
     const getDistance = () => {
         // seconds between when the component loaded and now
         const differentInTime = (new Date() - initialDate) / 1000; // pass to seconds
         return differentInTime * velocity; // d = v*t -- thanks Newton!
     };
-
+    
     const moveObject = () => {
         const distance = getDistance();
         if (!distance) {
@@ -57,10 +57,11 @@ const Map = ({paths, stops})=> {
           (coordinates) => coordinates.distance > distance
         );
     
-        console.log(paths, progress, nextLine, distance);
+        
         if (!nextLine) {
           setProgress(progress)
           window.clearInterval(interval);
+          console.log("Trip Completed!! Thank You !!")
           return; // it's the end!
         }
         const lastLine = progress[progress.length - 1];
@@ -88,6 +89,7 @@ const Map = ({paths, stops})=> {
         mapUpdate();
         setProgress(progress.concat(position))
     };
+
     const calculatePath = () => {
         paths = paths.map((coordinates, i, array) => {
           if (i === 0) {
@@ -108,6 +110,7 @@ const Map = ({paths, stops})=> {
           return { ...coordinates, distance };
         });
     };
+    
     const startSimulation = useCallback(
         () => {
             if(interval) {
@@ -120,12 +123,6 @@ const Map = ({paths, stops})=> {
         [interval, initialDate],
     );
 
-    const stopSimulation = useCallback(
-        () => {
-            console.log("STOP Simulation....");
-        },
-        [],
-    )
     const mapUpdate = () => {
         const distance = getDistance();
         if (!distance) {
@@ -160,8 +157,6 @@ const Map = ({paths, stops})=> {
         );
         const actualAngle = angle - 90;
 
-        // const markerUrl =
-        // "https://images.vexels.com/media/users/3/154573/isolated/preview/bd08e000a449288c914d851cb9dae110-hatchback-car-top-view-silhouette-by-vexels.png";
         const marker = document.querySelector(`[src="${icon1.url}"]`);
 
         if (marker) {
@@ -171,50 +166,52 @@ const Map = ({paths, stops})=> {
     }
     
     return(
+      <Card variant="outlined">
+        <div className='btnCont'>
+          <Button variant="contained" onClick={startSimulation}>Start Simulation</Button>
+        </div>
         
-        <Card variant="outlined">
-          <div>
-            <Button variant="contained" onClick={startSimulation}>Start Simulation</Button>
-            <GoogleMap
-                defaultZoom={17}
-                defaultCenter={{ lat: centerPathLat, lng: centerpathLng }}
-            >
-              <Polyline
-                  path={paths}
-                  options={{
-                  strokeColor: "#0088FF",
-                  strokeWeight: 6,
-                  strokeOpacity: 0.6,
-                  defaultVisible: true,
-                  }}
-              />
+        <div className='gMapCont'>
+          <GoogleMap
+              defaultZoom={17}
+              defaultCenter={{ lat: centerPathLat, lng: centerpathLng }}
+          >
+            <Polyline
+                path={paths}
+                options={{
+                strokeColor: "#0088FF",
+                strokeWeight: 6,
+                strokeOpacity: 0.6,
+                defaultVisible: true,
+                }}
+            />
 
-              {stops.data.map((stop, index) => (
+            {stops.data.map((stop, index) => (
 
-                  <Marker
-                      key={index}
-                      position={{
-                          lat: stop.lat,
-                          lng: stop.lng
-                      }}
-                      title={stop.id}
-                      label={`${index + 1}`}
-                  />
-              ))}
+                <Marker
+                    key={index}
+                    position={{
+                        lat: stop.lat,
+                        lng: stop.lng
+                    }}
+                    title={stop.id}
+                    label={`${index + 1}`}
+                />
+            ))}
 
-              {progress && (
-                  <>
-                  <Polyline
-                      path={progress}
-                      options={{ strokeColor: "orange" }}
-                  />
+            {progress && (
+                <>
+                <Polyline
+                    path={progress}
+                    options={{ strokeColor: "orange" }}
+                />
 
-                  <Marker
-                      icon={icon1}
-                      position={progress[progress.length - 1]}
-                  />
-                  </>
-              )}
+                <Marker
+                    icon={icon1}
+                    position={progress[progress.length - 1]}
+                />
+                </>
+            )}
           </GoogleMap>
         </div>
       </Card>  

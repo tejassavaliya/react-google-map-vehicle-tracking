@@ -4,6 +4,7 @@ import WrappedMap from './components/gMap/Map';
 
 import config from './components/gMap/config';
 import useFetch from './hooks/useFetch';
+import Header from './components/Header/Header';
 
 function App() {
   
@@ -14,13 +15,15 @@ function App() {
   return (
     <div className="App">
       
+      <Header/>
+      
       { paths && stops ?
         <WrappedMap
             paths={paths}
             stops={stops}
             googleMapURL={mapURL}
             loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={<div style={{ height: `650px`, width: "1000px" }} />}
+            containerElement={<div className='mapContainer'  />}
             mapElement={<div style={{ height: `100%` }} />}
           />
           : <div>Loading.....</div>
