@@ -5,6 +5,8 @@ import WrappedMap from './components/gMap/Map';
 import config from './components/gMap/config';
 import useFetch from './hooks/useFetch';
 import Header from './components/Header/Header';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 function App() {
   
@@ -26,7 +28,10 @@ function App() {
             containerElement={<div className='mapContainer'  />}
             mapElement={<div style={{ height: `100%` }} />}
           />
-          : <div>Loading.....</div>
+          : 
+          <Box sx={{ width: '100%' }}>
+            <LinearProgress />
+          </Box>
         }
     </div>
   );
