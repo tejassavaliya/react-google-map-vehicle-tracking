@@ -1,4 +1,4 @@
-# react-google-map-vehicle-tracking
+# react-google-map-vehicle-tracking [![Netlify Status](https://api.netlify.com/api/v1/badges/644fd02e-5d2c-45a4-8b0b-7ac931d36664/deploy-status)](https://app.netlify.com/sites/react-google-map-vehicle-live-tracking/deploys)
 ## Demo Link: https://react-google-map-vehicle-live-tracking.netlify.app/
 
 #
