@@ -14,8 +14,10 @@ Created a Single page application in ReactJS which uses the provided data from m
 #### API-1 : `https://61a4a0604c822c0017041d33.mockapi.io/shuttle/v1/path`
 #### API-2 : `https://61a4a0604c822c0017041d33.mockapi.io/shuttle/v1/stops`
 
-# 
-![react-google-map-vehicle-tracking example](./gmap-simulator.gif)
+#
+
+![GMap-Simulator](https://user-images.githubusercontent.com/1678725/149657446-39f3f0f9-364c-4a16-b339-f3921172ef32.gif)
+
 
 #
 ## Available Scripts
